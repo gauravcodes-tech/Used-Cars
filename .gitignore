@@ -1,0 +1,12 @@
+# Root ignores
+node_modules/
+.env
+.vscode/
+.DS_Store
+
+# Backend
+backend/node_modules/
+
+# Frontend build
+frontend/dist/
+frontend/node_modules/.vite/
