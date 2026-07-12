@@ -1,5 +1,11 @@
 function AddCar() {
-  return <h1>Add Used Car</h1>;
+  return (
+    <div>
+      <h2>Add Car</h2>
+
+      <p>Add car form will come here.</p>
+    </div>
+  );
 }
 
 export default AddCar;

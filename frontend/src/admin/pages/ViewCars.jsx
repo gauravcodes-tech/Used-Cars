@@ -1,5 +1,11 @@
 function ViewCars() {
-  return <h1>View All Cars</h1>;
+  return (
+    <div>
+      <h2>View Cars</h2>
+
+      <p>Cars table will come here.</p>
+    </div>
+  );
 }
 
 export default ViewCars;
