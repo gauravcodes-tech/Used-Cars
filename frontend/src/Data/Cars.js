@@ -3,7 +3,7 @@ const cars = [
 {
 id:1,
 
-name:"BMW X5",
+name:"Porsche 911",
 
 price:1850000,
 
@@ -20,7 +20,7 @@ image:"https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600"
 {
 id:2,
 
-name:"Audi A6",
+name:"Audi A4",
 
 price:2250000,
 
@@ -54,7 +54,7 @@ image:"https://images.unsplash.com/photo-1553440569-bcc63803a83d?w=600"
 {
 id:4,
 
-name:"Hyundai Creta",
+name:"BMW 3 Series",
 
 price:1450000,
 
@@ -71,7 +71,7 @@ image:"https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600"
 {
 id:5,
 
-name:"Mahindra XUV700",
+name:"Lamborgini Huracan",
 
 price:1950000,
 
@@ -88,7 +88,7 @@ image:"https://images.unsplash.com/photo-1511919884226-fd3cad34687c?w=600"
 {
 id:6,
 
-name:"Toyota Fortuner",
+name:"Toyota",
 
 price:3650000,
 
