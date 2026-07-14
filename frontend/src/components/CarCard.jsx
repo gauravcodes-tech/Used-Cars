@@ -1,27 +1,47 @@
+import { Link } from "react-router-dom";
 import Button from "./Button";
 import "./CarCard.css";
 
-function CarCard() {
+function CarCard({
+  id,
+  image,
+  name,
+  price,
+  year,
+  fuel,
+  transmission,
+}) {
+  return (
+    <div className="card">
 
-    return (
+      <img src={image} alt={name} />
 
-        <div className="card">
+      <div className="card-body">
 
-            <img
-                src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600"
-                alt="car"
-            />
+        <h2>{name}</h2>
 
-            <h2>BMW X5</h2>
+        <h3>₹ {price.toLocaleString("en-IN")}</h3>
 
-            <h3>₹18,50,000</h3>
+        <div className="car-info">
 
-            <Button text="View Details" />
+          <span>{year}</span>
+
+          <span>{fuel}</span>
+
+          <span>{transmission}</span>
 
         </div>
 
-    );
+        <Link to={`/cars/${id}`}>
 
+          <Button text="View Details" />
+
+        </Link>
+
+      </div>
+
+    </div>
+  );
 }
 
 export default CarCard;
