@@ -1,39 +1,46 @@
+import Hero from "../components/Hero";
 import CarCard from "../components/CarCard";
 import cars from "../data/cars";
 
 function Home() {
+
   return (
-    <div style={{ padding: "40px" }}>
 
-      <h1>Find Your Dream Used Car</h1>
+    <>
 
-      <p>Best marketplace to buy quality used cars.</p>
+      <Hero />
 
-      <br />
+      <div className="container py-5">
 
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "30px",
-        }}
-      >
-        {cars.slice(0, 3).map((car) => (
-          <CarCard
-            key={car.id}
-            id={car.id}
-            image={car.image}
-            name={car.name}
-            price={car.price}
-            year={car.year}
-            fuel={car.fuel}
-            transmission={car.transmission}
-          />
-        ))}
+        <h2 className="mb-4">
+          Featured Cars
+        </h2>
+
+        <div className="row">
+
+          {cars.slice(0,3).map((car)=>(
+
+            <div
+              className="col-lg-4"
+              key={car.id}
+            >
+
+              <CarCard
+                {...car}
+              />
+
+            </div>
+
+          ))}
+
+        </div>
+
       </div>
 
-    </div>
+    </>
+
   );
+
 }
 
 export default Home;
