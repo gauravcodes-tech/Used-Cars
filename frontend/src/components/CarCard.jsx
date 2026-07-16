@@ -14,14 +14,16 @@ function CarCard({
 }) {
   return (
     <div className="card">
-
-      <img src={image} alt={name} />
-
       <div className="wishlist">
 
-    <FaHeart />
+        <FaHeart />
 
-</div>
+      </div>
+      <img src={image}
+
+        alt={name} />
+
+
 
       <div className="card-body">
 
