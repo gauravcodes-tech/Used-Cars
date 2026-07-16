@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import Button from "./Button";
 import "./CarCard.css";
+import { FaHeart } from "react-icons/fa";
 
 function CarCard({
   id,
@@ -15,6 +16,12 @@ function CarCard({
     <div className="card">
 
       <img src={image} alt={name} />
+
+      <div className="wishlist">
+
+    <FaHeart />
+
+</div>
 
       <div className="card-body">
 

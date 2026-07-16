@@ -38,3 +38,39 @@
   color: gray;
   font-size: 14px;
 }
+
+.card{
+    position:relative;
+}
+
+.wishlist{
+
+position:absolute;
+
+top:15px;
+
+right:15px;
+
+width:40px;
+
+height:40px;
+
+background:white;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+cursor:pointer;
+
+box-shadow:0 3px 8px rgba(0,0,0,.2);
+}
+
+.wishlist svg{
+
+color:red;
+}
