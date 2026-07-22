@@ -1,11 +1,18 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-import cars from "../data/cars";
+import API from "../services/api";
+
 import CarCard from "../components/CarCard";
 import SearchBar from "../components/SearchBar";
 import Filters from "../components/Filters";
 
 function Cars() {
+
+  const [cars, setCars] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState("");
 
   const [search, setSearch] = useState("");
 
@@ -13,35 +20,73 @@ function Cars() {
 
   const [sort, setSort] = useState("");
 
+  useEffect(() => {
+
+    const fetchCars = async () => {
+
+      try {
+
+        const res = await API.get("/cars");
+
+        setCars(res.data.data);
+
+      } catch (err) {
+
+        setError("Failed to load cars.");
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+    fetchCars();
+
+  }, []);
+
   const filteredCars = useMemo(() => {
 
     let data = [...cars];
-
-    // Search
 
     data = data.filter((car) =>
       car.name.toLowerCase().includes(search.toLowerCase())
     );
 
-    // Fuel Filter
-
     if (fuel !== "All") {
+
       data = data.filter((car) => car.fuel === fuel);
+
     }
 
-    // Sorting
-
     if (sort === "low") {
+
       data.sort((a, b) => a.price - b.price);
+
     }
 
     if (sort === "high") {
+
       data.sort((a, b) => b.price - a.price);
+
     }
 
     return data;
 
-  }, [search, fuel, sort]);
+  }, [cars, search, fuel, sort]);
+
+  if (loading) {
+
+    return <h2 className="text-center mt-5">Loading Cars...</h2>;
+
+  }
+
+  if (error) {
+
+    return <h2 className="text-center mt-5">{error}</h2>;
+
+  }
 
   return (
 
@@ -51,8 +96,8 @@ function Cars() {
         Available Used Cars
       </h1>
 
-      <p className="text-secondary mb-4">
-        Browse certified used cars.
+      <p className="text-secondary">
+        Browse cars directly from MongoDB.
       </p>
 
       <SearchBar
@@ -77,26 +122,25 @@ function Cars() {
 
       <div className="row">
 
-        {filteredCars.length === 0 ? (
+        {
 
-          <h3>No Cars Found</h3>
-
-        ) : (
-
-          filteredCars.map((car) => (
+          filteredCars.map((car)=>(
 
             <div
+
               className="col-lg-4 col-md-6 mb-4"
-              key={car.id}
+
+              key={car._id}
+
             >
 
-              <CarCard {...car} />
+              <CarCard {...car}/>
 
             </div>
 
           ))
 
-        )}
+        }
 
       </div>
 

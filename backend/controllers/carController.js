@@ -1,31 +1,24 @@
-export const getCars = (req, res) => {
+import Car from "../models/Car.js";
 
-  const cars = [
+export const getCars = async (req, res) => {
 
-    {
-      id: 1,
-      name: "BMW X5",
-      price: 4200000
-    },
+  try {
 
-    {
-      id: 2,
-      name: "Audi A6",
-      price: 3600000
-    },
+    const cars = await Car.find();
 
-    {
-      id: 3,
-      name: "Mercedes C-Class",
-      price: 4500000
-    }
+    res.status(200).json({
+      success: true,
+      count: cars.length,
+      data: cars
+    });
 
-  ];
+  } catch (error) {
 
-  res.status(200).json({
-    success: true,
-    count: cars.length,
-    data: cars
-  });
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+
+  }
 
 };

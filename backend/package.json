@@ -4,6 +4,7 @@
   "description": "Node.js + Express + MongoDB Backend",
   "main": "server.js",
   "scripts": {
+  "seed": "node seed/seedCars.js",
   "start": "node server.js",
   "dev": "nodemon server.js"
 },
