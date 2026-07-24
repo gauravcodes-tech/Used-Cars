@@ -4,7 +4,7 @@ import "./CarCard.css";
 import { FaHeart } from "react-icons/fa";
 
 function CarCard({
-  id,
+  _id,
   image,
   name,
   price,
@@ -41,7 +41,7 @@ function CarCard({
 
         </div>
 
-        <Link to={`/cars/${id}`}>
+        <Link to={`/cars/${_id}`}>
 
           <Button text="View Details" />
 

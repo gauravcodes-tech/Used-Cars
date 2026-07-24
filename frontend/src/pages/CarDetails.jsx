@@ -1,50 +1,120 @@
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import cars from "../data/cars";
+
+import API from "../services/api";
 
 function CarDetails() {
 
   const { id } = useParams();
 
-  const car = cars.find((item) => item.id === Number(id));
+  const [car, setCar] = useState(null);
 
-  if (!car) {
-    return <h2>Car Not Found</h2>;
+  const [loading, setLoading] = useState(true);
+
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+
+    const fetchCar = async () => {
+
+      try {
+
+        const res = await API.get(`/cars/${id}`);
+
+        setCar(res.data.data);
+
+      } catch (err) {
+
+        setError("Car not found.");
+
+      } finally {
+
+        setLoading(false);
+
+      }
+
+    };
+
+    fetchCar();
+
+  }, [id]);
+
+  if (loading) {
+
+    return <h2 className="text-center mt-5">Loading...</h2>;
+
+  }
+
+  if (error) {
+
+    return <h2 className="text-center mt-5">{error}</h2>;
+
   }
 
   return (
 
     <div className="container py-5">
 
-      <img
-        src={car.image}
-        alt={car.name}
-        style={{
-          width: "100%",
-          maxWidth: "700px",
-          borderRadius: "10px",
-        }}
-      />
+      <div className="row">
 
-      <br />
-      <br />
+        <div className="col-lg-6">
 
-      <h1>{car.name}</h1>
+          <img
 
-      <h2 className="text-primary">
-        ₹ {car.price.toLocaleString("en-IN")}
-      </h2>
+            src={car.image}
 
-      <hr />
+            alt={car.name}
 
-      <h5>Year : {car.year}</h5>
+            className="img-fluid rounded shadow"
 
-      <h5>Fuel : {car.fuel}</h5>
+          />
 
-      <h5>Transmission : {car.transmission}</h5>
+        </div>
+
+        <div className="col-lg-6">
+
+          <h1>{car.name}</h1>
+
+          <h2 className="text-primary">
+
+            ₹ {car.price.toLocaleString("en-IN")}
+
+          </h2>
+
+          <hr />
+
+          <p>
+
+            <strong>Year:</strong> {car.year}
+
+          </p>
+
+          <p>
+
+            <strong>Fuel:</strong> {car.fuel}
+
+          </p>
+
+          <p>
+
+            <strong>Transmission:</strong> {car.transmission}
+
+          </p>
+
+          <button className="btn btn-success mt-3">
+
+            Contact Seller
+
+          </button>
+
+        </div>
+
+      </div>
 
     </div>
 
   );
+
 }
 
 export default CarDetails;
