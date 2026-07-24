@@ -1,50 +1,93 @@
 import { Link } from "react-router-dom";
+import { FaHeart, FaMapMarkerAlt, FaGasPump, FaCog, FaUser, FaRoad } from "react-icons/fa";
 import Button from "./Button";
 import "./CarCard.css";
-import { FaHeart } from "react-icons/fa";
 
 function CarCard({
   _id,
   image,
   name,
-  price,
+  brand,
+  model,
+  variant,
   year,
   fuel,
   transmission,
+  kmDriven,
+  owner,
+  location,
+  color,
+  price,
+  featured,
+  rating,
 }) {
   return (
     <div className="card">
+
       <div className="wishlist">
-
         <FaHeart />
-
       </div>
-      <img src={image}
 
-        alt={name} />
+      {featured && (
+        <div className="featured-badge">
+          Featured
+        </div>
+      )}
 
-
+      <img src={image} alt={name} />
 
       <div className="card-body">
 
+        <div className="rating">
+          ⭐ {rating}
+        </div>
+
         <h2>{name}</h2>
 
-        <h3>₹ {price.toLocaleString("en-IN")}</h3>
+        <p className="variant">
+          {brand} • {variant}
+        </p>
 
-        <div className="car-info">
+        <div className="location">
+          <FaMapMarkerAlt />
+          <span>{location}</span>
+        </div>
 
-          <span>{year}</span>
+        <div className="details-grid">
 
-          <span>{fuel}</span>
+          <div>
+            <FaRoad />
+            <span>{kmDriven.toLocaleString()} km</span>
+          </div>
 
-          <span>{transmission}</span>
+          <div>
+            <FaUser />
+            <span>{owner}</span>
+          </div>
+
+          <div>
+            <FaGasPump />
+            <span>{fuel}</span>
+          </div>
+
+          <div>
+            <FaCog />
+            <span>{transmission}</span>
+          </div>
 
         </div>
 
+        <div className="extra-info">
+          <span>{year}</span>
+          <span>{color}</span>
+        </div>
+
+        <h3>
+  ₹ {(price / 100000).toFixed(2)} Lakh
+</h3>
+
         <Link to={`/cars/${_id}`}>
-
           <Button text="View Details" />
-
         </Link>
 
       </div>
