@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 
 /* Customer Layout */
-import MainLayout from "./layouts/MainLayout";
+import MainLayout from "./Layouts/MainLayout";
 
 /* Customer Pages */
 import Home from "./pages/Home";

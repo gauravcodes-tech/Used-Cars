@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 
-import API from "../services/api";
+import API from "../Services/api";
+import staticCars from "../Data/Cars";
 
 import CarCard from "../components/CarCard";
 import SearchBar from "../components/SearchBar";
@@ -8,11 +9,9 @@ import Filters from "../components/Filters";
 
 function Cars() {
 
-  const [cars, setCars] = useState([]);
+  const [cars, setCars] = useState(staticCars);
 
-  const [loading, setLoading] = useState(true);
-
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [search, setSearch] = useState("");
 
@@ -28,16 +27,10 @@ function Cars() {
 
         const res = await API.get("/cars");
 
-        setCars(res.data.data);
+        setCars(Array.isArray(res.data?.data) ? res.data.data : staticCars);
 
       } catch (err) {
-
-        setError("Failed to load cars.");
-
-      } finally {
-
-        setLoading(false);
-
+        setCars(staticCars);
       }
 
     };
@@ -48,10 +41,10 @@ function Cars() {
 
   const filteredCars = useMemo(() => {
 
-    let data = [...cars];
+    let data = Array.isArray(cars) ? [...cars] : [];
 
     data = data.filter((car) =>
-      car.name.toLowerCase().includes(search.toLowerCase())
+      car.name?.toLowerCase().includes(search.toLowerCase())
     );
 
     if (fuel !== "All") {
@@ -82,12 +75,6 @@ function Cars() {
 
   }
 
-  if (error) {
-
-    return <h2 className="text-center mt-5">{error}</h2>;
-
-  }
-
   return (
 
     <div className="container py-5">
@@ -97,7 +84,7 @@ function Cars() {
       </h1>
 
       <p className="text-secondary">
-        Browse cars directly from MongoDB.
+        Browse verified used cars.
       </p>
 
       <SearchBar
@@ -130,7 +117,7 @@ function Cars() {
 
               className="col-lg-4 col-md-6 mb-4"
 
-              key={car._id}
+              key={car._id ?? car.id}
 
             >
 

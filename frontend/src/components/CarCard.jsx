@@ -5,10 +5,10 @@ import "./CarCard.css";
 
 function CarCard({
   _id,
+  id,
   image,
   name,
   brand,
-  model,
   variant,
   year,
   fuel,
@@ -21,6 +21,21 @@ function CarCard({
   featured,
   rating,
 }) {
+  const carId = _id ?? id;
+  const variantText = [brand, variant].filter(Boolean).join(" - ");
+  const formattedKm = typeof kmDriven === "number"
+    ? `${kmDriven.toLocaleString()} km`
+    : "KM not listed";
+  const formattedPrice = typeof price === "number"
+    ? `Rs. ${(price / 100000).toFixed(2)} Lakh`
+    : "Price on request";
+  const detailFields = [
+    { icon: <FaRoad />, value: formattedKm },
+    { icon: <FaUser />, value: owner ?? "Owner not listed" },
+    { icon: <FaGasPump />, value: fuel ?? "Fuel not listed" },
+    { icon: <FaCog />, value: transmission ?? "Transmission not listed" },
+  ];
+
   return (
     <div className="card">
 
@@ -38,57 +53,52 @@ function CarCard({
 
       <div className="card-body">
 
-        <div className="rating">
-          ⭐ {rating}
-        </div>
+        {rating && (
+          <div className="rating">
+            Rating {rating}
+          </div>
+        )}
 
         <h2>{name}</h2>
 
-        <p className="variant">
-          {brand} • {variant}
-        </p>
+        {variantText && (
+          <p className="variant">
+            {variantText}
+          </p>
+        )}
 
-        <div className="location">
-          <FaMapMarkerAlt />
-          <span>{location}</span>
-        </div>
+        {location && (
+          <div className="location">
+            <FaMapMarkerAlt />
+            <span>{location}</span>
+          </div>
+        )}
 
         <div className="details-grid">
 
-          <div>
-            <FaRoad />
-            <span>{kmDriven.toLocaleString()} km</span>
-          </div>
-
-          <div>
-            <FaUser />
-            <span>{owner}</span>
-          </div>
-
-          <div>
-            <FaGasPump />
-            <span>{fuel}</span>
-          </div>
-
-          <div>
-            <FaCog />
-            <span>{transmission}</span>
-          </div>
+          {detailFields.map((field) => (
+            <div key={field.value}>
+              {field.icon}
+              <span>{field.value}</span>
+            </div>
+          ))}
 
         </div>
 
         <div className="extra-info">
-          <span>{year}</span>
-          <span>{color}</span>
+          {year && <span>{year}</span>}
+          {color && <span>{color}</span>}
         </div>
 
         <h3>
-  ₹ {(price / 100000).toFixed(2)} Lakh
-</h3>
+          {formattedPrice}
+        </h3>
 
-        <Link to={`/cars/${_id}`}>
-          <Button text="View Details" />
-        </Link>
+        {carId && (
+          <Link to={`/cars/${carId}`}>
+            <Button text="View Details" />
+          </Link>
+        )}
 
       </div>
 

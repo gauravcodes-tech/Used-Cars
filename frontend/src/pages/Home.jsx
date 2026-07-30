@@ -1,6 +1,6 @@
 import Hero from "../components/Hero";
 import CarCard from "../components/CarCard";
-import cars from "../data/cars";
+import cars from "../Data/Cars";
 
 function Home() {
 
