@@ -9,10 +9,11 @@ function Register() {
   const [loading, setLoading] = useState(false);
 
   const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-  });
+  name: "",
+  email: "",
+  password: "",
+  role: "user",
+});
 
   const handleChange = (e) => {
 
@@ -85,6 +86,37 @@ function Register() {
           required
           onChange={handleChange}
         />
+
+        <div className="mb-3">
+
+<label className="form-label">
+
+Role
+
+</label>
+
+<select
+className="form-select"
+name="role"
+value={form.role}
+onChange={handleChange}
+>
+
+<option value="user">
+
+User
+
+</option>
+
+<option value="admin">
+
+Admin
+
+</option>
+
+</select>
+
+</div>
 
         <button
           className="btn btn-success"

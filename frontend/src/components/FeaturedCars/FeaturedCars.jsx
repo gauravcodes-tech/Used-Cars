@@ -3,91 +3,114 @@ import { Link } from "react-router-dom";
 import API from "../../Services/api";
 import CarCard from "../CarCard/CarCard";
 
+import "./FeaturedCars.css";
+
 function FeaturedCars() {
+
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
     const fetchFeaturedCars = async () => {
+
       try {
+
         const res = await API.get("/cars");
 
-        const featured = res.data.data
+        const featuredCars = res.data.data
           .filter((car) => car.featured)
-          .slice(0, 6);
+          .slice(0, 8);
 
-        setCars(featured);
+        setCars(featuredCars);
+
       } catch (err) {
+
         console.log(err);
+
       } finally {
+
         setLoading(false);
+
       }
+
     };
 
     fetchFeaturedCars();
+
   }, []);
 
-  if (loading) {
-    return (
-      <div className="container py-5 text-center">
-        <div className="spinner-border text-primary"></div>
-      </div>
-    );
-  }
-
   return (
-    <section className="container py-5">
 
-      <div className="d-flex justify-content-between align-items-center mb-4">
+    <section className="featured-section">
+
+      <div className="featured-top">
 
         <div>
 
-          <h2>Featured Cars</h2>
+          <span className="section-tag">
+            PREMIUM COLLECTION
+          </span>
 
-          <p className="text-muted">
-            Hand-picked premium used cars
+          <h2>
+            Featured Used Cars
+          </h2>
+
+          <p>
+
+            Explore our hand-picked collection of premium verified used cars from trusted sellers across India.
+
           </p>
 
         </div>
 
         <Link
           to="/cars"
-          className="btn btn-dark"
+          className="view-all-btn"
         >
-          View All Cars
+          View All Cars →
         </Link>
 
       </div>
 
-      <div className="row">
+      {
 
-        {cars.length === 0 ? (
+        loading ?
 
-          <div className="col-12 text-center">
+        <div className="loading-cars">
 
-            <h5>No Featured Cars Available</h5>
+          Loading Featured Cars...
 
-          </div>
+        </div>
 
-        ) : (
+        :
 
-          cars.map((car) => (
+        <div className="featured-grid">
 
-            <div
-              className="col-lg-4 col-md-6 mb-4"
-              key={car._id}
-            >
-              <CarCard {...car} />
-            </div>
+          {
 
-          ))
+            cars.map((car)=>(
 
-        )}
+              <CarCard
 
-      </div>
+                key={car._id}
+
+                {...car}
+
+              />
+
+            ))
+
+          }
+
+        </div>
+
+      }
 
     </section>
+
   );
+
 }
 
 export default FeaturedCars;

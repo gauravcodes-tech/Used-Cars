@@ -7,16 +7,15 @@ import {
   FaUserCircle,
   FaChevronDown,
   FaSignOutAlt,
-  FaUser,
 } from "react-icons/fa";
 
 import { useAuth } from "../../context/AuthContext";
 
 function Navbar() {
 
-  const { user, logout } = useAuth();
-
   const navigate = useNavigate();
+
+  const { user, logout } = useAuth();
 
   const handleLogout = () => {
 
@@ -34,18 +33,19 @@ function Navbar() {
 
         {/* Logo */}
 
-        <div className="logo">
+        <div
+          className="logo"
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer" }}
+        >
 
           <div className="logo-box">
             <FaCarSide />
           </div>
 
           <div className="logo-text">
-
             <h2>UsedCars</h2>
-
             <span>Premium Marketplace</span>
-
           </div>
 
         </div>
@@ -76,7 +76,7 @@ function Navbar() {
 
               <NavLink to="/admin">
 
-                Dashboard
+                Admin Dashboard
 
               </NavLink>
 
@@ -118,7 +118,13 @@ function Navbar() {
 
                   <h4>{user.name}</h4>
 
-                  <small>{user.role}</small>
+                  <small>
+
+                    {user.role === "admin"
+                      ? "Administrator"
+                      : "User"}
+
+                  </small>
 
                 </div>
 
@@ -127,11 +133,8 @@ function Navbar() {
               </div>
 
               <button
-
                 className="logout"
-
                 onClick={handleLogout}
-
               >
 
                 <FaSignOutAlt />
@@ -142,23 +145,32 @@ function Navbar() {
 
           ) : (
 
-            <>
+            <div
+              style={{
+                display: "flex",
+                gap: "10px",
+              }}
+            >
 
               <NavLink
-                className="btn btn-outline-primary"
                 to="/login"
+                className="btn btn-outline-dark"
               >
+
                 Login
+
               </NavLink>
 
               <NavLink
-                className="btn btn-primary"
                 to="/register"
+                className="btn btn-dark"
               >
+
                 Register
+
               </NavLink>
 
-            </>
+            </div>
 
           )}
 

@@ -1,57 +1,275 @@
-.sidebar {
-  width: 250px;
-  min-height: 100vh;
-  background: #1e293b;
-  color: white;
-  display: flex;
-  flex-direction: column;
+/* ===============================
+   SIDEBAR
+================================== */
+
+.admin-sidebar{
+
+position:fixed;
+
+left:20px;
+
+top:20px;
+
+bottom:20px;
+
+width:245px;
+
+background:#ffffff;
+
+border-radius:24px;
+
+display:flex;
+
+flex-direction:column;
+
+padding:22px;
+
+box-shadow:0 18px 45px rgba(15,23,42,.08);
+
+border:1px solid #edf2f7;
+
+z-index:999;
+
+transition:.35s;
+
 }
 
-.logo {
-  font-size: 26px;
-  font-weight: bold;
-  text-align: center;
-  padding: 25px 0;
-  border-bottom: 1px solid #334155;
+/* ===============================
+   LOGO
+================================== */
+
+.sidebar-logo{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+cursor:pointer;
+
+padding-bottom:25px;
+
+border-bottom:1px solid #eef2f7;
+
+margin-bottom:25px;
+
 }
 
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-  margin-top: 20px;
+.logo-icon{
+
+width:56px;
+
+height:56px;
+
+border-radius:18px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:24px;
+
+color:white;
+
+background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+box-shadow:0 10px 25px rgba(37,99,235,.25);
+
 }
 
-.sidebar ul li {
-  margin: 10px 0;
+.sidebar-logo h2{
+
+margin:0;
+
+font-size:22px;
+
+font-weight:800;
+
+color:#0f172a;
+
 }
 
-.sidebar ul li a {
-  color: white;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 15px 25px;
-  transition: 0.3s;
+.sidebar-logo span{
+
+font-size:13px;
+
+color:#64748b;
+
 }
 
-.sidebar ul li a:hover {
-  background: #2563eb;
+/* ===============================
+   MENU
+================================== */
+
+.sidebar-menu{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+flex:1;
+
 }
 
-.sidebar ul li a.active {
-  background: #2563eb;
+.sidebar-menu a{
+
+display:flex;
+
+align-items:center;
+
+gap:14px;
+
+padding:15px 18px;
+
+border-radius:16px;
+
+text-decoration:none;
+
+color:#334155;
+
+font-weight:600;
+
+font-size:15px;
+
+transition:.3s;
+
 }
 
-.logout {
-  margin-top: auto;
-  padding: 20px;
-  display: flex;
-  gap: 12px;
-  cursor: pointer;
-  border-top: 1px solid #334155;
+.sidebar-menu a svg{
+
+font-size:20px;
+
+min-width:22px;
+
 }
 
-.logout:hover {
-  background: crimson;
+.sidebar-menu a:hover{
+
+background:#eff6ff;
+
+color:#2563eb;
+
+transform:translateX(6px);
+
+}
+
+.active-link{
+
+background:linear-gradient(135deg,#2563eb,#3b82f6);
+
+color:white !important;
+
+box-shadow:0 15px 30px rgba(37,99,235,.25);
+
+}
+
+/* ===============================
+   FOOTER
+================================== */
+
+.sidebar-footer{
+
+display:flex;
+
+flex-direction:column;
+
+gap:12px;
+
+margin-top:auto;
+
+}
+
+.website-btn,
+
+.logout-btn{
+
+height:50px;
+
+border:none;
+
+border-radius:14px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:12px;
+
+font-size:15px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.website-btn{
+
+background:#eff6ff;
+
+color:#2563eb;
+
+}
+
+.website-btn:hover{
+
+background:#2563eb;
+
+color:white;
+
+transform:translateY(-2px);
+
+}
+
+.logout-btn{
+
+background:#ef4444;
+
+color:white;
+
+}
+
+.logout-btn:hover{
+
+background:#dc2626;
+
+transform:translateY(-2px);
+
+}
+
+/* ===============================
+   RESPONSIVE
+================================== */
+
+@media(max-width:992px){
+
+.admin-sidebar{
+
+left:0;
+
+top:0;
+
+bottom:0;
+
+border-radius:0;
+
+transform:translateX(-100%);
+
+}
+
+.admin-sidebar.open{
+
+transform:translateX(0);
+
+}
+
 }

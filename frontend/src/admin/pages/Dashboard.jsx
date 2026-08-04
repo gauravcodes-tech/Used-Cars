@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import {
   FaCar,
   FaStar,
@@ -6,163 +8,198 @@ import {
   FaClock,
   FaPlusCircle,
   FaListAlt,
+  FaArrowUp,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+
 import API from "../../Services/api";
+
 import "./Dashboard.css";
 
 function Dashboard() {
+
   const [stats, setStats] = useState(null);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+
     const fetchDashboard = async () => {
+
       try {
+
         const res = await API.get("/cars/dashboard");
+
         setStats(res.data.data);
-      } catch (error) {
-        console.log(error);
+
+      } catch (err) {
+
+        console.log(err);
+
       } finally {
+
         setLoading(false);
+
       }
+
     };
 
     fetchDashboard();
+
   }, []);
 
   if (loading) {
+
     return (
-      <div className="text-center py-5">
-        <h3>Loading Dashboard...</h3>
+
+      <div className="dashboard-loading">
+
+        Loading Dashboard...
+
       </div>
+
     );
+
   }
 
   return (
-    <div className="container-fluid">
 
-      <div className="d-flex justify-content-between align-items-center mb-4">
+    <div className="dashboard-page">
+
+      {/* Header */}
+
+      <div className="dashboard-header">
 
         <div>
-          <h2>🚗 Admin Dashboard</h2>
-          <p className="text-muted">
-            Welcome back! Here's an overview of your inventory.
+
+          <h1>
+
+            Dashboard Overview
+
+          </h1>
+
+          <p>
+
+            Welcome back! Here's your dealership summary.
+
           </p>
+
         </div>
 
-        <div>
+        <div className="dashboard-buttons">
 
           <Link
             to="/admin/add-car"
-            className="btn btn-success me-2"
+            className="add-btn"
           >
-            <FaPlusCircle /> Add Car
+
+            <FaPlusCircle />
+
+            Add Car
+
           </Link>
 
           <Link
             to="/admin/view-cars"
-            className="btn btn-primary"
+            className="view-btn"
           >
-            <FaListAlt /> View Cars
+
+            <FaListAlt />
+
+            Manage Cars
+
           </Link>
 
         </div>
 
       </div>
 
-      <div className="row">
+      {/* Stats */}
 
-        <div className="col-lg-3 col-md-6 mb-4">
+      <div className="stats-grid">
 
-          <div className="card shadow border-0 h-100">
+        <div className="stat-card">
 
-            <div className="card-body text-center">
+          <div className="stat-icon blue">
 
-              <FaCar
-                size={38}
-                className="text-primary mb-3"
-              />
+            <FaCar />
 
-              <h3>{stats.totalCars}</h3>
+          </div>
 
-              <p className="text-muted">
-                Total Cars
-              </p>
+          <div>
 
-            </div>
+            <h2>
+
+              {stats.totalCars}
+
+            </h2>
+
+            <span>Total Cars</span>
 
           </div>
 
         </div>
 
-        <div className="col-lg-3 col-md-6 mb-4">
+        <div className="stat-card">
 
-          <div className="card shadow border-0 h-100">
+          <div className="stat-icon yellow">
 
-            <div className="card-body text-center">
+            <FaStar />
 
-              <FaStar
-                size={38}
-                className="text-warning mb-3"
-              />
+          </div>
 
-              <h3>{stats.featuredCars}</h3>
+          <div>
 
-              <p className="text-muted">
-                Featured Cars
-              </p>
+            <h2>
 
-            </div>
+              {stats.featuredCars}
+
+            </h2>
+
+            <span>Featured Cars</span>
 
           </div>
 
         </div>
 
-        <div className="col-lg-3 col-md-6 mb-4">
+        <div className="stat-card">
 
-          <div className="card shadow border-0 h-100">
+          <div className="stat-icon green">
 
-            <div className="card-body text-center">
+            <FaRupeeSign />
 
-              <FaRupeeSign
-                size={38}
-                className="text-success mb-3"
-              />
+          </div>
 
-              <h5>
-                ₹ {Number(stats.averagePrice).toLocaleString("en-IN")}
-              </h5>
+          <div>
 
-              <p className="text-muted">
-                Average Price
-              </p>
+            <h2>
 
-            </div>
+              ₹ {(stats.averagePrice / 100000).toFixed(1)}L
+
+            </h2>
+
+            <span>Average Price</span>
 
           </div>
 
         </div>
 
-        <div className="col-lg-3 col-md-6 mb-4">
+        <div className="stat-card">
 
-          <div className="card shadow border-0 h-100">
+          <div className="stat-icon red">
 
-            <div className="card-body text-center">
+            <FaClock />
 
-              <FaClock
-                size={38}
-                className="text-danger mb-3"
-              />
+          </div>
 
-              <h5>
-                {stats.latestCar?.name || "N/A"}
-              </h5>
+          <div>
 
-              <p className="text-muted">
-                Latest Car
-              </p>
+            <h2>
 
-            </div>
+              {stats.latestCar?.year || "--"}
+
+            </h2>
+
+            <span>Latest Model</span>
 
           </div>
 
@@ -170,87 +207,120 @@ function Dashboard() {
 
       </div>
 
-      <div className="card shadow border-0">
+      {/* Recent Cars */}
 
-        <div className="card-header bg-dark text-white">
+      <div className="recent-card">
 
-          <h5 className="mb-0">
-            Recent Cars
-          </h5>
+        <div className="recent-header">
+
+          <h2>
+
+            Recently Added Cars
+
+          </h2>
+
+          <span>
+
+            <FaArrowUp />
+
+            Live Inventory
+
+          </span>
 
         </div>
 
-        <div className="card-body">
+        <div className="table-responsive">
 
-          <div className="table-responsive">
+          <table className="recent-table">
 
-            <table className="table table-hover align-middle">
+            <thead>
 
-              <thead className="table-light">
+              <tr>
 
-                <tr>
+                <th>Image</th>
 
-                  <th>Name</th>
+                <th>Name</th>
 
-                  <th>Brand</th>
+                <th>Brand</th>
 
-                  <th>Year</th>
+                <th>Year</th>
 
-                  <th>Price</th>
+                <th>Fuel</th>
 
-                </tr>
+                <th>Price</th>
 
-              </thead>
+              </tr>
 
-              <tbody>
+            </thead>
 
-                {stats.recentCars.length === 0 ? (
+            <tbody>
 
-                  <tr>
+              {
 
-                    <td
-                      colSpan="4"
-                      className="text-center py-4"
-                    >
-                      No Cars Available
+                stats.recentCars.map((car)=>(
+
+                  <tr key={car._id}>
+
+                    <td>
+
+                      <img
+
+                        src={car.image}
+
+                        alt={car.name}
+
+                      />
+
+                    </td>
+
+                    <td>
+
+                      {car.name}
+
+                    </td>
+
+                    <td>
+
+                      {car.brand}
+
+                    </td>
+
+                    <td>
+
+                      {car.year}
+
+                    </td>
+
+                    <td>
+
+                      {car.fuel}
+
+                    </td>
+
+                    <td>
+
+                      ₹ {Number(car.price).toLocaleString("en-IN")}
+
                     </td>
 
                   </tr>
 
-                ) : (
+                ))
 
-                  stats.recentCars.map((car) => (
+              }
 
-                    <tr key={car._id}>
+            </tbody>
 
-                      <td>{car.name}</td>
-
-                      <td>{car.brand}</td>
-
-                      <td>{car.year}</td>
-
-                      <td>
-                        ₹ {Number(car.price).toLocaleString("en-IN")}
-                      </td>
-
-                    </tr>
-
-                  ))
-
-                )}
-
-              </tbody>
-
-            </table>
-
-          </div>
+          </table>
 
         </div>
 
       </div>
 
     </div>
+
   );
+
 }
 
 export default Dashboard;

@@ -1,81 +1,141 @@
-import { NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import "./Sidebar.css";
+
+import { NavLink, useNavigate } from "react-router-dom";
+
 import {
+  FaCarSide,
   FaTachometerAlt,
   FaCar,
   FaPlusCircle,
-  FaEdit,
+  FaGlobe,
   FaSignOutAlt,
 } from "react-icons/fa";
 
-import "./Sidebar.css";
+import { useAuth } from "../../context/AuthContext";
 
 function Sidebar() {
+
   const navigate = useNavigate();
+
   const { logout } = useAuth();
 
-  return (
+  const handleLogout = () => {
 
-    <div className="sidebar">
-
-      <div className="logo">
-
-  <h2>🚗 UsedCars</h2>
-
-  <span>Admin Panel</span>
-
-</div>
-
-      <ul>
-
-        <li>
-          <NavLink to="/admin">
-            <FaTachometerAlt />
-            Dashboard
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/admin/view-cars">
-            <FaCar />
-            View Cars
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/admin/add-car">
-            <FaPlusCircle />
-            Add Car
-          </NavLink>
-        </li>
-
-
-      </ul>
-
-     <div
-  className="logout"
-  onClick={() => {
-
-  if(window.confirm("Logout from Admin Panel?")){
+    if (window.confirm("Logout from Admin Panel?")) {
 
       logout();
 
-navigate("/login");
+      navigate("/login");
 
-  }
+    }
 
-}}
->
+  };
 
-  <FaSignOutAlt />
+  return (
 
-  Logout
+    <aside className="admin-sidebar">
 
-</div>
+      {/* ================= LOGO ================= */}
 
-    </div>
+      <div
+        className="sidebar-logo"
+        onClick={() => navigate("/")}
+      >
+
+        <div className="logo-icon">
+
+          <FaCarSide />
+
+        </div>
+
+        <div>
+
+          <h2>UsedCars</h2>
+
+          <span>Premium Admin</span>
+
+        </div>
+
+      </div>
+
+      {/* ================= MENU ================= */}
+
+      <nav className="sidebar-menu">
+
+        <NavLink
+          to="/admin"
+          end
+          className={({ isActive }) =>
+            isActive ? "active-link" : ""
+          }
+        >
+
+          <FaTachometerAlt />
+
+          <span>Dashboard</span>
+
+        </NavLink>
+
+        <NavLink
+          to="/admin/view-cars"
+          className={({ isActive }) =>
+            isActive ? "active-link" : ""
+          }
+        >
+
+          <FaCar />
+
+          <span>Manage Cars</span>
+
+        </NavLink>
+
+        <NavLink
+          to="/admin/add-car"
+          className={({ isActive }) =>
+            isActive ? "active-link" : ""
+          }
+        >
+
+          <FaPlusCircle />
+
+          <span>Add New Car</span>
+
+        </NavLink>
+
+      </nav>
+
+      {/* ================= BOTTOM ================= */}
+
+      <div className="sidebar-footer">
+
+        <button
+          className="website-btn"
+          onClick={() => navigate("/")}
+        >
+
+          <FaGlobe />
+
+          Main Website
+
+        </button>
+
+        <button
+          className="logout-btn"
+          onClick={handleLogout}
+        >
+
+          <FaSignOutAlt />
+
+          Logout
+
+        </button>
+
+      </div>
+
+    </aside>
+
   );
+
 }
 
 export default Sidebar;

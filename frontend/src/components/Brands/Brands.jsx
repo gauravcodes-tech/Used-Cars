@@ -1,79 +1,156 @@
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+
+import API from "../../Services/api";
+
 import "./Brands.css";
 
 const brands = [
   {
-    name: "Toyota",
-    logo: "/Brands/toyota.png",
-  },
-  {
-    name: "Hyundai",
-    logo: "/Brands/hyundai.png",
-  },
-  {
-    name: "Maruti Suzuki",
-    logo: "/Brands/suzuki.png",
-  },
-  {
-    name: "Honda",
-    logo: "/Brands/honda.png",
-  },
-  {
-    name: "Volkswagen",
-    logo: "/Brands/volkswagen.png",
-  },
-  {
-    name: "Tata",
-    logo: "/Brands/tata.png",
-  },
-  {
-    name: "Kia",
-    logo: "/Brands/kia.png",
-  },
-  {
     name: "BMW",
-    logo: "/Brands/bmw.png",
+    image: "/brands/bmw.png",
   },
   {
     name: "Mercedes",
-    logo: "/Brands/mercedes.png",
+    image: "/brands/mercedes.png",
   },
   {
     name: "Audi",
-    logo: "/Brands/audi.png",
+    image: "/brands/audi.png",
+  },
+  {
+    name: "Toyota",
+    image: "/brands/toyota.png",
+  },
+  {
+    name: "Volkswagen",
+    image: "/brands/volkswagen.png",
+  },
+  {
+    name: "Hyundai",
+    image: "/brands/hyundai.png",
+  },
+  {
+    name: "Mahindra",
+    image: "/brands/mahindra.png",
+  },
+  {
+    name: "Tata",
+    image: "/brands/tata.png",
   },
 ];
 
 function Brands() {
+  const [cars, setCars] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // =========================
+  // FETCH LIVE CARS
+  // =========================
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const res = await API.get("/cars");
+
+        setCars(res.data.data || []);
+      } catch (error) {
+        console.error("Failed to load brand counts:", error);
+        setCars([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCars();
+  }, []);
+
+  // =========================
+  // LIVE BRAND COUNTS
+  // =========================
+
+  const brandCounts = useMemo(() => {
+    const counts = {};
+
+    cars.forEach((car) => {
+      if (!car.brand) return;
+
+      const carBrand = car.brand.trim().toLowerCase();
+
+      counts[carBrand] = (counts[carBrand] || 0) + 1;
+    });
+
+    return counts;
+  }, [cars]);
+
+  // =========================
+  // GET COUNT
+  // =========================
+
+  const getBrandCount = (brandName) => {
+    return brandCounts[brandName.toLowerCase()] || 0;
+  };
+
   return (
     <section className="brands-section">
 
       <div className="brands-header">
 
-        <h2>Browse by Brand</h2>
+        <div>
 
-        <button className="view-all-btn">
-          View All Brands →
-        </button>
+          <span className="section-tag">
+            POPULAR BRANDS
+          </span>
+
+          <h2>
+            Browse by Brand
+          </h2>
+
+          <p>
+            Choose from India's most trusted car manufacturers.
+          </p>
+
+        </div>
+
+        <Link
+          to="/cars"
+          className="brands-btn"
+        >
+          View All Cars →
+        </Link>
 
       </div>
 
       <div className="brands-grid">
 
-        {brands.map((brand) => (
+        {brands.map((brand) => {
+          const count = getBrandCount(brand.name);
 
-          <div className="brand-card" key={brand.name}>
+          return (
+            <Link
+              key={brand.name}
+              to={`/cars?brand=${encodeURIComponent(brand.name)}`}
+              className="brand-card"
+            >
 
-            <img
-              src={brand.logo}
-              alt={brand.name}
-              className="brand-logo"
-            />
+              <img
+                src={brand.image}
+                alt={`${brand.name} logo`}
+              />
 
-            <h4>{brand.name}</h4>
+              <h4>
+                {brand.name}
+              </h4>
 
-          </div>
+              <span>
+                {loading
+                  ? "Loading..."
+                  : `${count} ${count === 1 ? "Car" : "Cars"}`}
+              </span>
 
-        ))}
+            </Link>
+          );
+        })}
 
       </div>
 

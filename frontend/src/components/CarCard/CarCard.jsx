@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import API from "../../Services/api";
 import {
   FaHeart,
   FaGasPump,
@@ -22,7 +23,34 @@ function CarCard({
   rating,
   price,
   featured,
-}) {
+  
+})
+{
+    const token = localStorage.getItem("token");
+
+  const addWishlist = async () => {
+
+    if (!token) {
+      alert("Please Login First");
+      return;
+    }
+
+    try {
+
+      await API.post(`/wishlist/${_id}`);
+
+      alert("Added To Wishlist ❤️");
+
+    } catch (err) {
+
+      alert(
+        err.response?.data?.message ||
+        "Already Added"
+      );
+
+    }
+
+  };
   return (
     <div className="premium-card">
 
@@ -36,9 +64,12 @@ function CarCard({
           </div>
         )}
 
-        <button className="wishlist-btn">
-          <FaHeart />
-        </button>
+        <button
+  className="wishlist-btn"
+  onClick={addWishlist}
+>
+  <FaHeart />
+</button>
 
       </div>
 

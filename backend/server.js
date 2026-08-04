@@ -7,6 +7,8 @@ import connectDB from "./config/db.js";
 import carRoutes from "./routes/carRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 
+import wishlistRoutes from "./routes/wishlistRoutes.js";
+
 dotenv.config();
 
 connectDB();
@@ -24,6 +26,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/cars", carRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 app.use("/api/auth", authRoutes);
 

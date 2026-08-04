@@ -1,0 +1,45 @@
+.latest-section{
+
+padding:70px 8%;
+
+background:#fafafa;
+
+}
+
+.latest-header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-bottom:40px;
+
+}
+
+.latest-header h2{
+
+font-size:38px;
+
+font-weight:700;
+
+margin-bottom:8px;
+
+}
+
+.latest-header p{
+
+color:#777;
+
+}
+
+.latest-grid{
+
+display:grid;
+
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+gap:30px;
+
+}

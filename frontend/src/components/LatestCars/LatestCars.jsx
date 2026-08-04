@@ -3,9 +3,12 @@ import { Link } from "react-router-dom";
 import API from "../../Services/api";
 import CarCard from "../CarCard/CarCard";
 
+import "./LatestCars.css";
+
 function LatestCars() {
 
   const [cars, setCars] = useState([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,12 +20,8 @@ function LatestCars() {
         const res = await API.get("/cars");
 
         const latest = res.data.data
-          .sort(
-            (a, b) =>
-              new Date(b.createdAt) -
-              new Date(a.createdAt)
-          )
-          .slice(0, 6);
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+          .slice(0, 4);
 
         setCars(latest);
 
@@ -45,76 +44,70 @@ function LatestCars() {
   if (loading) {
 
     return (
-      <div className="container text-center py-5">
 
-        <div className="spinner-border"></div>
+      <section className="latest-section">
 
-      </div>
+        <h2>Loading Latest Cars...</h2>
+
+      </section>
+
     );
 
   }
 
   return (
 
-<section className="container py-5">
+    <section className="latest-section">
 
-<div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="latest-header">
 
-<div>
+        <div>
 
-<h2>
+          <h2>Latest Arrivals</h2>
 
-Latest Arrivals
+          <p>
 
-</h2>
+            Recently added cars from our marketplace.
 
-<p className="text-muted">
+          </p>
 
-Recently Added Cars
+        </div>
 
-</p>
+        <Link
 
-</div>
+          to="/cars"
 
-<Link
+          className="view-all"
 
-to="/cars"
+        >
 
-className="btn btn-outline-dark"
+          View All →
 
->
+        </Link>
 
-View All
+      </div>
 
-</Link>
+      <div className="latest-grid">
 
-</div>
+        {
 
-<div className="row">
+          cars.map((car) => (
 
-{
+            <CarCard
 
-cars.map((car)=>(
+              key={car._id}
 
-<div
+              {...car}
 
-className="col-lg-4 col-md-6 mb-4"
+            />
 
-key={car._id}
+          ))
 
->
+        }
 
-<CarCard {...car}/>
+      </div>
 
-</div>
-
-))
-
-}
-
-</div>
-
-</section>
+    </section>
 
   );
 

@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     const userExists = await User.findOne({ email });
 
@@ -20,11 +20,11 @@ export const register = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-      role,
-    });
+  name,
+  email,
+  password: hashedPassword,
+  role: "user",
+});
 
     res.status(201).json({
       success: true,
@@ -84,10 +84,15 @@ export const login = async (req, res) => {
     );
 
     res.status(200).json({
-      success: true,
-      token,
-      user,
-    });
+  success: true,
+  token,
+  user: {
+    _id: user._id,
+    name: user.name,
+    email: user.email,
+    role: user.role,
+  },
+});
 
   } catch (error) {
 

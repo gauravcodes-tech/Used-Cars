@@ -30,22 +30,21 @@ function Hero() {
 
         <div className="hero-buttons">
 
-          <Link
-            to="/cars"
-            className="browse-btn"
-          >
-            Browse Cars
-            <FaArrowRight />
-          </Link>
+  <Link
+    to="/cars"
+    className="hero-btn primary-btn"
+  >
+    Browse Cars
+  </Link>
 
-          <Link
-            to="/contact"
-            className="contact-btn"
-          >
-            Contact Us
-          </Link>
+  <Link
+    to="/contact"
+    className="hero-btn secondary-btn"
+  >
+    Contact Us
+  </Link>
 
-        </div>
+</div>
 
       </div>
 

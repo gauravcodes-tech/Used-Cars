@@ -34,14 +34,6 @@ function App() {
 
       <Route path="/wishlist" element={<Wishlist />} />
 
-        
-
-        {/* <Route path="bookings" element={<Bookings />} />
-
-        <Route path="settings" element={<Settings />} /> */}
-
-        {/* <Route path="*" element={<NotFound />} /> */}
-
         <Route path="/" element={<Home />} />
 
         <Route path="/cars" element={<Cars />} />

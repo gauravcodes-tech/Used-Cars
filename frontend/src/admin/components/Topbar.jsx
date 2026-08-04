@@ -1,37 +1,108 @@
 import "./Topbar.css";
-import { FaBell, FaUserCircle, FaSearch } from "react-icons/fa";
+
+import {
+  FaSearch,
+  FaBell,
+  FaUserCircle,
+  FaChevronDown,
+} from "react-icons/fa";
+
+import { useAuth } from "../../context/AuthContext";
 
 function Topbar() {
-  return (
-    <div className="topbar">
 
-      <div className="search-box">
-        <FaSearch className="search-icon" />
+  const { user } = useAuth();
+
+  const today = new Date().toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  return (
+
+    <header className="admin-topbar">
+
+      {/* Left */}
+
+      <div className="topbar-left">
+
+        <h2>
+
+          Welcome Back 👋
+
+        </h2>
+
+        <span>
+
+          {today}
+
+        </span>
+
+      </div>
+
+      {/* Center */}
+
+      <div className="topbar-search">
+
+        <FaSearch />
+
         <input
           type="text"
-          placeholder="Search cars..."
+          placeholder="Search Cars..."
         />
+
       </div>
+
+      {/* Right */}
 
       <div className="topbar-right">
 
-        <FaBell className="icon" />
+        <button className="notification-btn">
 
-        <div className="admin-profile">
+          <FaBell />
+
+          <span className="notification-badge">
+
+            0
+
+          </span>
+
+        </button>
+
+        <div className="profile-card">
 
           <FaUserCircle className="profile-icon" />
 
           <div>
-            <h5>Gaurav</h5>
-            <p>Administrator</p>
+
+            <h4>
+
+              {user?.name || "Admin"}
+
+            </h4>
+
+            <small>
+
+              {user?.role === "admin"
+                ? "Administrator"
+                : "User"}
+
+            </small>
+
           </div>
+
+          <FaChevronDown />
 
         </div>
 
       </div>
 
-    </div>
+    </header>
+
   );
+
 }
 
 export default Topbar;

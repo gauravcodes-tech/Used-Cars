@@ -1,70 +1,60 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import API from "../Services/api";
 import { useAuth } from "../context/AuthContext";
 
 function Login() {
 
   const navigate = useNavigate();
-
-  const [loading,setLoading]=useState(false);
+  const location = useLocation();
 
   const { login } = useAuth();
 
-  const [form,setForm]=useState({
+  const [loading, setLoading] = useState(false);
 
-    email:"",
-    password:""
-
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
   });
 
-  const handleChange=(e)=>{
-
-    setForm({
-
-      ...form,
-
-      [e.target.name]:e.target.value
-
-    });
-
+  const handleChange = (e) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  const handleSubmit=async(e)=>{
+  const handleSubmit = async (e) => {
 
     e.preventDefault();
 
-    setLoading(true);
+    try {
 
-    try{
+      setLoading(true);
 
-      const res=await API.post("/auth/login",form);
+      const res = await API.post("/auth/login", form);
 
       login(res.data.user, res.data.token);
 
       alert("Login Successful ✅");
 
-      if(res.data.user.role==="admin"){
+      const redirectPath = location.state?.from?.pathname;
+
+      if (res.data.user.role === "admin") {
 
         navigate("/admin");
 
-      }
+      } else {
 
-      else{
-
-        navigate("/");
+        navigate(redirectPath || "/");
 
       }
 
-    }
+    } catch (err) {
 
-    catch(err){
+      alert(err.response?.data?.message || "Login Failed");
 
-      alert(err.response?.data?.message||"Login Failed");
-
-    }
-
-    finally{
+    } finally {
 
       setLoading(false);
 
@@ -72,98 +62,76 @@ function Login() {
 
   };
 
-  return(
+  return (
 
-<div className="container py-5">
+    <div className="container py-5">
 
-<h2 className="mb-4">
+      <div className="row justify-content-center">
 
-Login
+        <div className="col-lg-5">
 
-</h2>
+          <div className="card shadow border-0">
 
-<form onSubmit={handleSubmit}>
+            <div className="card-body p-4">
 
-<input
+              <h2 className="text-center mb-4">
 
-className="form-control mb-3"
+                Login
 
-type="email"
+              </h2>
 
-name="email"
+              <form onSubmit={handleSubmit}>
 
-placeholder="Enter Email"
+                <input
+                  className="form-control mb-3"
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  value={form.email}
+                  onChange={handleChange}
+                  required
+                />
 
-required
+                <input
+                  className="form-control mb-4"
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={form.password}
+                  onChange={handleChange}
+                  required
+                />
 
-onChange={handleChange}
+                <button
+                  className="btn btn-dark w-100"
+                  disabled={loading}
+                >
+                  {loading ? "Logging In..." : "Login"}
+                </button>
 
-/>
+              </form>
 
-<input
+              <p className="text-center mt-3">
 
-className="form-control mb-3"
+                Don't have an account?{" "}
 
-type="password"
+                <Link to="/register">
 
-name="password"
+                  Register
 
-placeholder="Enter Password"
+                </Link>
 
-required
+              </p>
 
-onChange={handleChange}
+            </div>
 
-/>
+          </div>
 
-<button
+        </div>
 
-className="btn btn-primary"
+      </div>
 
-disabled={loading}
-
->
-    <hr />
-
-<p>
-
-<b>Admin Demo</b>
-
-</p>
-
-<p>
-
-Email :
-admin@gmail.com
-
-</p>
-
-<p>
-
-Password :
-123456
-
-</p>
-
-{
-
-loading
-
-?
-
-"Logging in..."
-
-:
-
-"Login"
-
-}
-
-</button>
-
-</form>
-
-</div>
+    </div>
 
   );
 
