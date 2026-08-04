@@ -1,4 +1,6 @@
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 import {
   FaTachometerAlt,
   FaCar,
@@ -10,12 +12,20 @@ import {
 import "./Sidebar.css";
 
 function Sidebar() {
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+
   return (
+
     <div className="sidebar">
 
       <div className="logo">
-        🚗 Used Cars
-      </div>
+
+  <h2>🚗 UsedCars</h2>
+
+  <span>Admin Panel</span>
+
+</div>
 
       <ul>
 
@@ -40,22 +50,29 @@ function Sidebar() {
           </NavLink>
         </li>
 
-        <li>
-          <NavLink to="/admin/edit-car">
-            <FaEdit />
-            Edit Car
-          </NavLink>
-        </li>
 
       </ul>
 
-      <div className="logout">
+     <div
+  className="logout"
+  onClick={() => {
 
-        <FaSignOutAlt />
+  if(window.confirm("Logout from Admin Panel?")){
 
-        Logout
+      logout();
 
-      </div>
+navigate("/login");
+
+  }
+
+}}
+>
+
+  <FaSignOutAlt />
+
+  Logout
+
+</div>
 
     </div>
   );

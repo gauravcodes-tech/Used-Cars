@@ -28,6 +28,8 @@ const carSchema = new mongoose.Schema(
 
     image:String,
 
+    description: String,
+
     featured:Boolean,
 
     rating:Number

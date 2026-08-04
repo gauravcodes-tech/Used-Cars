@@ -1,7 +1,11 @@
 import { Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 
 /* Customer Layout */
 import MainLayout from "./Layouts/MainLayout";
+import Wishlist from "./pages/Wishlist";
 
 /* Customer Pages */
 import Home from "./pages/Home";
@@ -15,8 +19,8 @@ import AdminLayout from "./admin/layout/AdminLayout";
 
 /* Admin Pages */
 import Dashboard from "./admin/pages/Dashboard";
-import AddCar from "./admin/pages/AddCar";
 import ViewCars from "./admin/pages/ViewCars";
+import AddCar from "./admin/pages/AddCar";
 import EditCar from "./admin/pages/EditCar";
 
 function App() {
@@ -25,7 +29,18 @@ function App() {
 
       {/* ================= CUSTOMER ================= */}
 
+      
       <Route element={<MainLayout />}>
+
+      <Route path="/wishlist" element={<Wishlist />} />
+
+        
+
+        {/* <Route path="bookings" element={<Bookings />} />
+
+        <Route path="settings" element={<Settings />} /> */}
+
+        {/* <Route path="*" element={<NotFound />} /> */}
 
         <Route path="/" element={<Home />} />
 
@@ -37,11 +52,15 @@ function App() {
 
         <Route path="/contact" element={<Contact />} />
 
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={<Register />} />
+
       </Route>
 
       {/* ================= ADMIN ================= */}
 
-      <Route path="/admin" element={<AdminLayout />}>
+      <Route path="/admin" element={<ProtectedRoute> <AdminLayout /> </ProtectedRoute>}>
 
         <Route index element={<Dashboard />} />
 
@@ -49,7 +68,7 @@ function App() {
 
         <Route path="add-car" element={<AddCar />} />
 
-        <Route path="edit-car" element={<EditCar />} />
+        <Route path="edit-car/:id" element={<EditCar />} />
 
       </Route>
 

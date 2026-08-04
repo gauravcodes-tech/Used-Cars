@@ -158,3 +158,55 @@ export const deleteCar = async (req, res) => {
   }
 
 };
+export const getDashboardStats = async (req, res) => {
+
+  try {
+
+    const cars = await Car.find().sort({ createdAt: -1 });
+
+    const totalCars = cars.length;
+
+    const featuredCars = cars.filter(car => car.featured).length;
+
+    const averagePrice =
+      totalCars > 0
+        ? Math.round(
+            cars.reduce((sum, car) => sum + car.price, 0) / totalCars
+          )
+        : 0;
+
+    const latestCar = totalCars > 0 ? cars[0] : null;
+
+    res.status(200).json({
+
+      success: true,
+
+      data: {
+
+        totalCars,
+
+        featuredCars,
+
+        averagePrice,
+
+        latestCar,
+
+        recentCars: cars.slice(0, 5)
+
+      }
+
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+
+      success: false,
+
+      message: error.message
+
+    });
+
+  }
+
+};

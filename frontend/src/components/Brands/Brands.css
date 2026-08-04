@@ -1,0 +1,205 @@
+/* ========================= */
+/* BRANDS SECTION */
+/* ========================= */
+
+.brands-section{
+
+    max-width:1350px;
+
+    margin:45px auto 60px;
+
+    padding:0 10px;
+
+}
+
+/* ========================= */
+/* HEADER */
+/* ========================= */
+
+.brands-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:28px;
+
+}
+
+.brands-header h2{
+
+    font-size:34px;
+
+    font-weight:800;
+
+    color:#111827;
+
+    margin:0;
+
+}
+
+.view-all-btn{
+
+    border:none;
+
+    background:transparent;
+
+    color:#2563eb;
+
+    font-size:16px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.view-all-btn:hover{
+
+    transform:translateX(5px);
+
+}
+
+/* ========================= */
+/* GRID */
+/* ========================= */
+
+.brands-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    gap:18px;
+
+}
+
+/* ========================= */
+/* CARD */
+/* ========================= */
+
+.brand-card{
+
+    height:135px;
+
+    background:#fff;
+
+    border-radius:20px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    border:1px solid #edf2f7;
+
+    box-shadow:0 10px 25px rgba(15,23,42,.05);
+
+}
+
+.brand-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 18px 35px rgba(37,99,235,.12);
+
+    border-color:#2563eb;
+
+}
+
+/* ========================= */
+/* LOGO */
+/* ========================= */
+
+.brand-logo{
+
+    width:65px;
+
+    height:65px;
+
+    object-fit:contain;
+
+    margin-bottom:12px;
+
+}
+
+.brand-card h4{
+
+    margin:0;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+/* ========================= */
+/* RESPONSIVE */
+/* ========================= */
+
+@media(max-width:1100px){
+
+.brands-grid{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+}
+
+@media(max-width:768px){
+
+.brands-header{
+
+flex-direction:column;
+
+align-items:flex-start;
+
+gap:12px;
+
+}
+
+.brands-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+.brand-card{
+
+height:120px;
+
+}
+
+.brand-logo{
+
+width:52px;
+
+height:52px;
+
+}
+
+}
+
+@media(max-width:500px){
+
+.brands-grid{
+
+grid-template-columns:1fr;
+
+}
+
+}

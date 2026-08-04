@@ -1,10 +1,19 @@
 import axios from "axios";
 
 const API = axios.create({
+  baseURL: "http://localhost:5000/api",
+});
 
-    baseURL: "http://localhost:5000/api",
+// Automatically send JWT token
+API.interceptors.request.use((config) => {
 
-    timeout: 3000
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
 
 });
 

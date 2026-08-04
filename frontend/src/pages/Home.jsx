@@ -1,43 +1,23 @@
-import Hero from "../components/Hero";
-import CarCard from "../components/CarCard";
-import cars from "../Data/Cars";
+import Hero from "../components/Hero/Hero";
+import Brands from "../components/Brands/Brands";
+import FeaturedCars from "../components/FeaturedCars/FeaturedCars";
+import LatestCars from "../components/LatestCars/LatestCars";
 
 function Home() {
 
   return (
 
-    <>
+<>
 
-      <Hero />
+<Hero/>
 
-      <div className="container py-5">
+<Brands/>
 
-        <h2 className="mb-4">
-          Featured Cars
-        </h2>
+<FeaturedCars/>
 
-        <div className="row">
+<LatestCars/>
 
-          {cars.slice(0,3).map((car)=>(
-
-            <div
-              className="col-lg-4"
-              key={car.id}
-            >
-
-              <CarCard
-                {...car}
-              />
-
-            </div>
-
-          ))}
-
-        </div>
-
-      </div>
-
-    </>
+</>
 
   );
 
