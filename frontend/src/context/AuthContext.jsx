@@ -4,63 +4,54 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider = ({ children }) => {
-
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-
+  const [token, setToken] = useState(localStorage.getItem("token") || "");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    const token = localStorage.getItem("token");
-
     const savedUser = localStorage.getItem("user");
 
-    if (token && savedUser) {
-
-      setUser(JSON.parse(savedUser));
-
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch {
+        localStorage.removeItem("user");
+      }
     }
 
     setLoading(false);
-
   }, []);
 
-  const login = (userData, token) => {
-
-    localStorage.setItem("token", token);
-
+  const login = (userData, jwtToken) => {
+    localStorage.setItem("token", jwtToken);
     localStorage.setItem("user", JSON.stringify(userData));
 
+    setToken(jwtToken);
     setUser(userData);
-
   };
 
   const logout = () => {
-
     localStorage.removeItem("token");
-
     localStorage.removeItem("user");
 
+    setToken("");
     setUser(null);
-
   };
 
   return (
-
     <AuthContext.Provider
       value={{
         user,
+        token,
+        loading,
         login,
         logout,
-        loading
+        isLoggedIn: !!token,
+        isAdmin: user?.role === "admin",
       }}
     >
-
       {children}
-
     </AuthContext.Provider>
-
   );
-
-};
+}
