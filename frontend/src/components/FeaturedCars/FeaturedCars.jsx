@@ -58,7 +58,7 @@ function FeaturedCars() {
 
           <p>
 
-            Explore our hand-picked collection of premium verified used cars from trusted sellers across India.
+            Explore our hand-picked Featured collection of premium verified used cars from trusted sellers across India.
 
           </p>
 
