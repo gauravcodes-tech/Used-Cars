@@ -117,7 +117,7 @@ function CarCard({
 
           <div>
 
-            <small>Starting From</small>
+            <small>Price</small>
 
             <h2>
 
