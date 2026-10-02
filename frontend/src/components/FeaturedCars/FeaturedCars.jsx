@@ -49,7 +49,7 @@ function FeaturedCars() {
         <div>
 
           <span className="section-tag">
-            PREMIUM COLLECTION
+            PREMIUM COLLECTION OF CARS
           </span>
 
           <h2>
