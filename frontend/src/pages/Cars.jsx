@@ -404,7 +404,7 @@ function Cars() {
 
             >
 
-              Previous
+              Previous...
 
             </button>
 
@@ -422,7 +422,7 @@ function Cars() {
 
             >
 
-              Next
+              Next...
 
             </button>
 
